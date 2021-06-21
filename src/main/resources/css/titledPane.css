@@ -1,0 +1,59 @@
+/*
+    Created on : 13/05/2021, 22:07:26
+    Author     : Gustavo Bussolotti
+*/
+
+/** titledpanecustomization.css place in same build directory as TitledPaneCustomization.java
+    and ensure build system copies it to the output classpath. */
+/*
+Separador utilizado nos painéis: vermelho
+*/
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 1 0; /* its make really one-pixel-border */
+    -fx-border-color: #FFF;
+}
+
+.titled-pane {
+   /* -fx-skin: "com.sun.javafx.scene.control.skin.TitledPaneSkin";*/
+}
+
+.titled-pane > .title {
+    -fx-background-color: #666;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+.titled-pane > .title > .arrow-button {
+    -fx-background-color: null;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 0.0em 0.25em 0.0em 0.0em; /* 0 3 0 0 */
+}
+
+.titled-pane > .title > .arrow-button .arrow {
+    -fx-background-color: -fx-mark-highlight-color, -fx-mark-color;
+    -fx-background-insets: 1 0 -1 0, 0;
+    -fx-padding: 0.25em 0.3125em 0.25em 0.3125em; /* 3 3.75 3 3.75 */
+    -fx-shape: "M 0 0 h 7 l -3.5 4 z";
+}
+
+.titled-pane:collapsed > .title > .arrow-button .arrow {
+    -fx-rotate: -90;
+}
+
+.titled-pane > *.content {
+
+}
+
+.titled-pane:focused > .title {
+    -fx-color: -fx-focus-color;
+}
+
+.titled-pane:focused > .title > .text {
+    -fx-text-fill: white;
+}
+
+.titled-pane:focused > .title > .arrow-button .arrow {
+    -fx-background-color: white;
+}

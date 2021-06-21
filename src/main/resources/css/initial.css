@@ -1,0 +1,39 @@
+/*
+ * Empty Stylesheet file.
+ */
+.mainFxmlClass {
+    -fx-font-size:12px;
+}
+
+.text-input:disabled {
+    -fx-opacity: 1.0;
+    -fx-background-color: lightgrey;
+}
+
+.combo-box:disabled, .combo-box:disabled > * {
+    -fx-opacity: 1.0 ;
+    -fx-background-color: lightgrey;
+}
+
+.button:disabled{
+    -fx-opacity: 1.0;
+    -fx-background-color: lightgrey;
+}
+
+.date-picker:disabled{
+    -fx-opacity: 1.0;
+    -fx-background-color: lightgrey;
+}
+
+.txtarea .scroll-pane:disabled{
+    -fx-opacity: 1.0;
+    -fx-background-color: lightgrey;
+}
+
+.ativo .text-field {
+    -fx-text-fill: #000;
+}
+
+.inativo .text-field {
+    -fx-text-fill: #999;
+}
