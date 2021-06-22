@@ -15,15 +15,8 @@ import java.util.List;
 public class DataSetCadItem extends dao {
 
     @Override
-    public List consultaCompleta() throws PersistenciaException {
-        String sql = "SELECT c FROM CadItem c WHERE 1 = 1 ";
-        Query query = PersistenceFactory.getQuery(sql);
-        return query.getResultList();
-    }
-
-
-    public List consultaCompletaItensAtivos() throws PersistenciaException {
-        String sql = "SELECT c FROM CadItem c WHERE c.toConsult <> 0";
+    public List findAll() throws PersistenciaException {
+        String sql = "SELECT c FROM CadItem c";
         Query query = PersistenceFactory.getQuery(sql);
         return query.getResultList();
     }

@@ -11,6 +11,8 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
 <AnchorPane id="AnchorPane" fx:id="root" prefHeight="600.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rastreamento.correios.controller.InitialController">
     <stylesheets>
         <URL value="@/css/initial.css" />
@@ -43,12 +45,36 @@
                 </HBox>
             </top>
             <center>
-                <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #EEE;" BorderPane.alignment="CENTER">
-                    <content>
-                        <VBox fx:id="jPaneItens" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-                    </content>
-                </ScrollPane>
+                <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                    <tabs>
+                        <Tab text="Pendentes">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #EEE;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <content>
+                                                <VBox fx:id="jPaneItens" />
+                                            </content>
+                                        </ScrollPane>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Finalizados">
+                            <content>
+                                <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
+                                    <content>
+                                        <VBox fx:id="jPaneFinishedItens" />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
             </center>
+            <bottom>
+                <HBox prefHeight="60.0" prefWidth="800.0" styleClass="toolBarInferior" BorderPane.alignment="CENTER"  />
+            </bottom>
         </BorderPane>
     </children>
 </AnchorPane>

@@ -5,6 +5,13 @@
     -fx-font-size:12px;
 }
 
+.toolBarInferior {
+    -fx-background-color:
+        linear-gradient(to bottom, derive(-fx-base,-30%), derive(-fx-base,-60%)),
+        linear-gradient(to bottom, derive(-fx-base,65%) 2%, derive(-fx-base,-20%) 100%);
+    -fx-background-insets: 0, 1 0 1 0;
+}
+
 .text-input:disabled {
     -fx-opacity: 1.0;
     -fx-background-color: lightgrey;

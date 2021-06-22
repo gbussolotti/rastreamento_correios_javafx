@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class dao {
 
-    public List consultaCompleta() throws PersistenciaException {
+    public List findAll() throws PersistenciaException {
         return null;
     }
 

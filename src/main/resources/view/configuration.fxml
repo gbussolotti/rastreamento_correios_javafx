@@ -35,35 +35,6 @@
                     </children>
                 </HBox>
             </top>
-            <bottom>
-
-
-                <HBox alignment="CENTER_RIGHT" spacing="5.0" styleClass="toolBarInferior" BorderPane.alignment="CENTER">
-                    <children>
-                        <Button fx:id="jBSave" mnemonicParsing="false" onAction="#actionSave" text="Gravar">
-                            <graphic>
-                                <FontAwesomeIconView glyphName="SAVE" />
-                            </graphic>
-
-                            <HBox.margin>
-                                <Insets />
-                            </HBox.margin>
-                        </Button>
-                        <Button fx:id="jBCancel" mnemonicParsing="false" onAction="#actionCancel" text="Cancelar">
-                            <graphic>
-                                <FontAwesomeIconView glyphName="SIGN_OUT" />
-                            </graphic>
-
-                            <HBox.margin>
-                                <Insets />
-                            </HBox.margin>
-                        </Button>
-                    </children>
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
-                </HBox>
-            </bottom>
             <center>
                 <VBox prefHeight="200.0" prefWidth="474.0" BorderPane.alignment="CENTER">
                     <children>
@@ -108,6 +79,25 @@
                     </children>
                 </VBox>
             </center>
+            <bottom>
+                <HBox alignment="CENTER_RIGHT" spacing="5.0"  styleClass="toolBarInferior" BorderPane.alignment="CENTER">
+                    <children>
+                        <Button fx:id="jBSave" mnemonicParsing="false" onAction="#actionSave" text="Gravar">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="SAVE" />
+                            </graphic>
+                        </Button>
+                        <Button fx:id="jBCancel" mnemonicParsing="false" onAction="#actionCancel" text="Cancelar">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="SIGN_OUT" />
+                            </graphic>
+                        </Button>
+                    </children>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </HBox>
+            </bottom>
         </BorderPane>
     </children>
 </AnchorPane>

@@ -23,7 +23,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -68,7 +67,6 @@ public class InitialController implements Initializable {
             @Override
             public Erro call() throws Exception {
 
-
                 //Initialize the masker
                 Platform.runLater(() -> {
                     masker.setPrefSize(root.getWidth(), root.getHeight());
@@ -91,11 +89,11 @@ public class InitialController implements Initializable {
             if (returnTask != null) {
                 //Initialize the masker
                 Platform.runLater(() -> {
-                    masker.setText("Erro ao ler as configurações iniciais:\n"+ returnTask);
+                    masker.setText("Erro ao ler as configurações iniciais:\n" + returnTask);
                 });
                 System.err.println(returnTask);
                 //SystemApp.ALERT(returnTask.getType(), returnTask.getTitle(), returnTask.getMsg(), root);
-            }else{
+            } else {
                 maskerOff();
             }
         });
@@ -107,7 +105,7 @@ public class InitialController implements Initializable {
         maskerOn.set(true);
         masker.toFront();
         masker.setPrefSize(root.getWidth(), root.getHeight());
-        if(!StringUtils.isNullOrEmpty(msg)){
+        if (!StringUtils.isNullOrEmpty(msg)) {
             Platform.runLater(() -> {
                 masker.setText(msg);
             });
@@ -115,8 +113,11 @@ public class InitialController implements Initializable {
     }
 
     private void maskerOff() {
-        maskerOn.set(false);
-        masker.toBack();
+        Platform.runLater(() -> {
+            maskerOn.set(false);
+            masker.toBack();
+        });
+
     }
 
     @FXML
@@ -194,18 +195,26 @@ public class InitialController implements Initializable {
                     PersistenceFactory ps = new PersistenceFactory(CONFIGURATION);
 
                     //Consulta no banco de dados os itens que ainda estão pendentes
-                    listItens = ds.consultaCompletaItensAtivos();
+                    listItens = ds.findAll();
+
+                    List<CadItem> listToConsult = listItens
+                            .stream()
+                            .filter(c -> c.getToConsult())
+                            .collect(Collectors.toList());
+
+
                     WebService ws = new WebService();
                     try {
-                        listItens = (List<CadItem>) ws.consumirWebService(listItens);
+                        listToConsult = (List<CadItem>) ws.consumirWebService(listToConsult);
 
-                        //Atualiza o banco de dados
-                        for (CadItem i : listItens) {
+                        //Update database
+                        for (CadItem i : listToConsult) {
                             i = (CadItem) ds.inserir(i);
                         }
                     } catch (Erro ex) {
                         return ex;
                     }
+
                 } catch (PersistenciaException ex) {
                     return new Erro(Alert.AlertType.ERROR, "Erro na camada de persistência", ex.getMessage());
                 }
@@ -222,14 +231,14 @@ public class InitialController implements Initializable {
         SystemApp.openWindow(ConfigurationController.PATH, root, "Configuração", true);
     }
 
-    private void taskOnSucceededFinalize(Task<Erro> task){
+    private void taskOnSucceededFinalize(Task<Erro> task) {
         task.setOnSucceeded(e -> {
             maskerOff();
             Erro returnTask = task.valueProperty().get();
-            if(returnTask == null){
+            if (returnTask == null) {
                 //update View
                 updatePaneItens();
-            }else{
+            } else {
                 SystemApp.ALERT(returnTask.getType(), returnTask.getTitle(), returnTask.getMsg(), root);
             }
         });
@@ -242,6 +251,9 @@ public class InitialController implements Initializable {
         jPaneItens.getChildren();
         jPaneItens.getChildren().clear();
 
+        jPaneFinishedItens.getChildren();
+        jPaneFinishedItens.getChildren().clear();
+
         //initialize masker
         maskerOn("");
 
@@ -252,30 +264,23 @@ public class InitialController implements Initializable {
                 //Order the list
                 Collections.sort(listItens);
 
-                //Filter list itens for show only active itens
-                List<CadItem> listaConsultar = listItens
-                        .stream()
-                        .filter(c -> c.getToConsult())
-                        .collect(Collectors.toList());
-
                 //generate a pane for each item
-                listaConsultar.forEach((i) -> {
-
+                listItens.forEach((i) -> {
                     Platform.runLater(() -> {
-
                         masker.setText("Aguarde... Exibindo informações...\nObjeto: " + i.getTrackCode());
-
-                        //Irá gerar o painel com as informações do item
                         Node h = ItemPane.generateItemPane(i);
-                        Separator s = new Separator(Orientation.HORIZONTAL);
-
-                        jPaneItens.getChildren().add(h);
+                        if(i.getToConsult()){
+                            jPaneItens.getChildren().add(h);
+                        }else{
+                            jPaneFinishedItens.getChildren().add(h);
+                        }
                     });
                 });
+                maskerOff();
             }
         }.start();
 
-        maskerOff();
+
     }
 
 
@@ -284,6 +289,9 @@ public class InitialController implements Initializable {
 
     @FXML
     private VBox jPaneItens;
+
+    @FXML
+    private VBox jPaneFinishedItens;
 
     private final BooleanProperty maskerOn = new SimpleBooleanProperty(false);
     private final MaskerPane masker = new MaskerPane();
